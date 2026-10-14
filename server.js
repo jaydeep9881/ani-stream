@@ -69,8 +69,8 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.get('/home', (req, res) => {
-  res.sendFile(path.join(__dirname, 'stream.html'));
+app.get(['/home', '/home.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'home.html'));
 });
 
 // ── 0B. LANDING DATA API ────────────────────────────────────

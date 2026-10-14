@@ -50,7 +50,7 @@
               suggestList.querySelectorAll('.landing-suggest-item').forEach(el => {
                 el.addEventListener('click', () => {
                   const id = el.dataset.id;
-                  window.location.href = `/home?anime=${encodeURIComponent(id)}`;
+                  window.location.href = `./home.html?anime=${encodeURIComponent(id)}`;
                 });
               });
               return;
@@ -77,9 +77,9 @@
       e.preventDefault();
       const q = searchInput ? searchInput.value.trim() : '';
       if (q) {
-        window.location.href = `/home?keyword=${encodeURIComponent(q)}`;
+        window.location.href = `./home.html?keyword=${encodeURIComponent(q)}`;
       } else {
-        window.location.href = '/home';
+        window.location.href = './home.html';
       }
     });
   }
@@ -103,7 +103,7 @@
           topSearchWrap.querySelectorAll('.top-search-chip').forEach(chip => {
             chip.addEventListener('click', () => {
               const query = chip.dataset.search;
-              window.location.href = `/home?keyword=${encodeURIComponent(query)}`;
+              window.location.href = `./home.html?keyword=${encodeURIComponent(query)}`;
             });
           });
         }
@@ -111,7 +111,7 @@
         // Render Community Posts
         if (data.communityPosts && data.communityPosts.length > 0 && postsList) {
           postsList.innerHTML = data.communityPosts.map(p => `
-            <div class="post-item" onclick="window.location.href='/home'">
+            <div class="post-item" onclick="window.location.href='./home.html'">
               <div class="post-meta-top">
                 <span class="post-tag">${p.tag}</span>
                 <span class="post-time">${p.time}</span>
