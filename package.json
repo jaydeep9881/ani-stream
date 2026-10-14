@@ -1,0 +1,15 @@
+{
+  "name": "anistream-backend",
+  "version": "1.0.0",
+  "description": "AniStream proxy server for live HiAnime metadata and streaming sources",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "aniwatch": "^2.27.9",
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}
