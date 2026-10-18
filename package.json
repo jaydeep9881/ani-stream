@@ -1,22 +1,17 @@
 {
-  "name": "anistream-backend",
+  "name": "ani-stream",
   "version": "1.0.0",
-  "description": "AniStream proxy server for live HiAnime metadata and streaming sources",
-  "main": "server.js",
+  "description": "AniStream — High-performance anime streaming application built with Next.js 14, TypeScript, and Tailwind CSS",
   "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "server": "node server.js"
+    "start": "next start"
   },
   "dependencies": {
-    "aniwatch": "^2.27.9",
     "axios": "^1.20.0",
     "cheerio": "^1.2.0",
     "clsx": "^2.1.1",
-    "cors": "^2.8.5",
-    "express": "^4.21.2",
     "lucide-react": "^1.59.0",
     "next": "^14.2.24",
     "react": "^18.3.1",
