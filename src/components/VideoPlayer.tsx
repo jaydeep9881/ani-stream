@@ -41,6 +41,18 @@ export default function VideoPlayer({
   const [adShield, setAdShield] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Loophole Protection: Intercept any popup calls escaping to the parent window
+  useEffect(() => {
+    const originalOpen = window.open;
+    window.open = function (...args: any[]) {
+      console.warn('[AniStream Ad Shield] Intercepted and blocked popup window.open attempt:', args);
+      return null;
+    };
+    return () => {
+      window.open = originalOpen;
+    };
+  }, []);
+
   // Fetch servers for current episode
   useEffect(() => {
     if (!episodeId) return;
@@ -131,7 +143,7 @@ export default function VideoPlayer({
             className="w-full h-full border-0"
             sandbox={
               adShield
-                ? 'allow-scripts allow-same-origin allow-forms allow-presentation'
+                ? 'allow-scripts allow-same-origin allow-forms allow-presentation allow-orientation-lock allow-pointer-lock allow-downloads'
                 : undefined
             }
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
