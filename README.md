@@ -30,9 +30,11 @@ AniStream is a high-performance, modern anime streaming web application inspired
 
 ## 🛠️ Tech Stack
 
-- **Backend:** Node.js, Express, Axios, Cheerio (real-time HiAnime scraper & proxy)
-- **Frontend:** Vanilla HTML5, Modern CSS3 (CSS Variables, Flexbox/Grid, Glassmorphism, Micro-animations), JavaScript (ES6+)
-- **Video Playback:** HLS.js & Embed Player Engines
+- **Framework:** Next.js 14 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v3, PostCSS, Lucide Icons, Glassmorphism design tokens
+- **Data & Proxy Engine:** Axios, Cheerio (real-time HiAnime scraper & proxy via Next.js Route Handlers)
+- **Player Support:** Multi-server iframe embeds with base64 stream link decoders, SUB/DUB dual audio
 
 ---
 
@@ -56,14 +58,15 @@ AniStream is a high-performance, modern anime streaming web application inspired
    npm install
    ```
 
-3. Start the application:
+3. Start the Next.js development server:
    ```bash
-   node server.js
+   npm run dev
    ```
 
 4. Open your browser and navigate to:
    - **First Home Landing Page:** `http://localhost:3000/`
-   - **Streaming Portal:** `http://localhost:3000/home`
+   - **Streaming Catalog Portal:** `http://localhost:3000/home`
+   - **Watch Anime View:** `http://localhost:3000/watch/:slug`
 
 ---
 
