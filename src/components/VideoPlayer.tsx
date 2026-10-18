@@ -151,14 +151,27 @@ export default function VideoPlayer({
           />
         )}
 
+        {/* Custom AniStream Branding Badge (Masks Host Watermark) */}
+        {!isLoading && !error && activeServer?.embedUrl && (
+          <div className="absolute top-2.5 right-2.5 z-10 pointer-events-none select-none flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-bg/95 backdrop-blur-md border border-white/10 shadow-lg min-w-[135px] justify-center">
+            <div className="w-2 h-2 rounded-full bg-brand-pink animate-pulse" />
+            <span className="font-heading font-black text-xs tracking-tight text-white">
+              Ani<span className="text-brand-pink">Stream</span>
+            </span>
+            <span className="text-[10px] font-extrabold px-1.5 py-0.5 rounded bg-brand-purple/20 text-brand-purpleLight border border-brand-purple/30">
+              HD
+            </span>
+          </div>
+        )}
+
         {/* Cinema Mode Close Button */}
         {cinemaMode && (
           <button
             type="button"
             onClick={() => setCinemaMode(false)}
-            className="absolute top-4 right-4 z-20 px-3 py-1.5 rounded-xl bg-black/80 hover:bg-black text-white text-xs font-bold border border-white/20"
+            className="absolute top-4 left-4 z-20 px-3.5 py-1.5 rounded-xl bg-black/80 hover:bg-black text-white text-xs font-bold border border-white/20 shadow-lg"
           >
-            Exit Cinema Mode ✕
+            ← Exit Cinema Mode
           </button>
         )}
       </div>
