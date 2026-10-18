@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Play,
   RotateCw,
@@ -33,35 +33,13 @@ export default function VideoPlayer({
   hasPrev = false,
   hasNext = false,
 }: VideoPlayerProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
   const [servers, setServers] = useState<ServerResponse | null>(null);
   const [audioType, setAudioType] = useState<'sub' | 'dub'>('sub');
   const [activeServer, setActiveServer] = useState<ServerItem | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [cinemaMode, setCinemaMode] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [adShield, setAdShield] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  // Fullscreen container handler & listener
-  const toggleFullscreen = () => {
-    if (!containerRef.current) return;
-    if (!document.fullscreenElement) {
-      containerRef.current.requestFullscreen().catch((err) => {
-        console.warn('Fullscreen request failed:', err);
-      });
-    } else {
-      document.exitFullscreen().catch(() => {});
-    }
-  };
-
-  useEffect(() => {
-    const onFsChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
-    };
-    document.addEventListener('fullscreenchange', onFsChange);
-    return () => document.removeEventListener('fullscreenchange', onFsChange);
-  }, []);
 
   // Loophole Protection: Intercept any popup calls escaping to the parent window
   useEffect(() => {
@@ -138,10 +116,7 @@ export default function VideoPlayer({
       }`}
     >
       {/* Video Container */}
-      <div
-        ref={containerRef}
-        className="relative w-full aspect-video rounded-3xl overflow-hidden bg-black border border-white/10 shadow-2xl"
-      >
+      <div className="relative w-full aspect-video rounded-3xl overflow-hidden bg-black border border-white/10 shadow-2xl">
         {isLoading ? (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-bg-secondary">
             <div className="w-12 h-12 border-4 border-brand-purple border-t-transparent rounded-full animate-spin" />
@@ -164,11 +139,7 @@ export default function VideoPlayer({
         ) : (
           <iframe
             key={`${activeServer.embedUrl}-${adShield}`}
-            src={
-              activeServer.embedUrl.startsWith('http')
-                ? `/api/embed-proxy?url=${encodeURIComponent(activeServer.embedUrl)}`
-                : activeServer.embedUrl
-            }
+            src={activeServer.embedUrl}
             className="w-full h-full border-0"
             sandbox={
               adShield
@@ -274,19 +245,6 @@ export default function VideoPlayer({
           >
             <Lightbulb className="w-3.5 h-3.5" />
             <span>Cinema</span>
-          </button>
-          <button
-            type="button"
-            onClick={toggleFullscreen}
-            className={`px-3 py-1.5 rounded-xl text-xs font-medium flex items-center gap-1.5 border transition-all ${
-              isFullscreen
-                ? 'bg-brand-purple text-white border-transparent font-bold shadow-glow-purple'
-                : 'bg-white/5 hover:bg-white/10 text-white border-white/10'
-            }`}
-            title="Toggle Fullscreen"
-          >
-            <Maximize className="w-3.5 h-3.5" />
-            <span>{isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}</span>
           </button>
         </div>
       </div>
