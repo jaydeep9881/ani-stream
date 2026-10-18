@@ -10,6 +10,7 @@ import {
   ChevronRight,
   Server,
   Tv,
+  ShieldCheck,
 } from 'lucide-react';
 import { ServerResponse, ServerItem, EpisodeItem } from '@/lib/types';
 
@@ -37,6 +38,7 @@ export default function VideoPlayer({
   const [activeServer, setActiveServer] = useState<ServerItem | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [cinemaMode, setCinemaMode] = useState(false);
+  const [adShield, setAdShield] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   // Fetch servers for current episode
@@ -124,9 +126,14 @@ export default function VideoPlayer({
           </div>
         ) : (
           <iframe
-            key={activeServer.embedUrl}
+            key={`${activeServer.embedUrl}-${adShield}`}
             src={activeServer.embedUrl}
             className="w-full h-full border-0"
+            sandbox={
+              adShield
+                ? 'allow-scripts allow-same-origin allow-forms allow-presentation'
+                : undefined
+            }
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
           />
@@ -187,6 +194,19 @@ export default function VideoPlayer({
             title="Reload Player"
           >
             <RotateCw className="w-4 h-4" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setAdShield(!adShield)}
+            className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 border transition-all ${
+              adShield
+                ? 'bg-emerald-500/20 text-brand-green border-emerald-500/30 shadow-md'
+                : 'bg-white/5 text-text-dim border-white/10'
+            }`}
+            title={adShield ? 'Ad Shield: Active (Popups & Redirects Blocked)' : 'Ad Shield: Off'}
+          >
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>{adShield ? 'Ad Shield ON' : 'Ad Shield OFF'}</span>
           </button>
           <button
             type="button"
